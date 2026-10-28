@@ -121,20 +121,34 @@ linkguard/
 │   │   └── constants.ts        # Default crawler depth, rate limits, and timeouts
 │   │
 │   ├── db/                     # Embedded SQLite persistence layer
-│   │   ├── client.ts           # Bun:sqlite connection factory
+│   │   ├── client.ts           # Bun:sqlite connection factory & WAL configuration
 │   │   ├── migrations/         # Raw SQL schema migration scripts
-│   │   └── repositories/       # Isolated data access repositories (sites, scans, links, alerts)
+│   │   ├── repositories/       # Isolated data access repositories (sites, scans, links, alerts)
+│   │   └── maintenance.ts      # Log retention policy & vacuum cleanup
 │   │
-│   ├── core/                   # Domain business logic (runtime framework agnostic)
-│   │   ├── crawler/            # Discovery Engine: BFS traversal, HTML parsing, URL normalization
+│   ├── core/                   # Domain business logic (runtime & framework agnostic)
+│   │   ├── crawler/            # Discovery Engine: BFS traversal, Cheerio parser
 │   │   ├── verifier/           # Verification Engine: HEAD/GET verification, polite rate limiter
-│   │   ├── alerts/             # Alert Dispatcher & notification adapters (Telegram, Discord, Slack)
+│   │   ├── alerts/             # Multi-channel notification subsystem
+│   │   │   ├── dispatcher.ts   # Parallel broadcaster & resilience handler
+│   │   │   └── adapters/       # Channel adapters (base, telegram, discord, slack)
+│   │   ├── events/             # In-memory typed Event Bus for SSE & decoupled alerts
 │   │   └── scheduler/          # Background cron scheduler for automated recurring scans
 │   │
-│   ├── security/               # Authentication and reverse proxy adaptation
-│   │   ├── crypto.ts           # HMAC cookie signing and cryptographic verification
-│   │   ├── proxy.ts            # Proxy awareness (X-Forwarded-For, X-Forwarded-Proto)
-│   │   └── middleware.ts       # Hono route guards and development auth bypass
+│   ├── security/               # Core cryptographic primitives and session token management
+│   │   ├── crypto.ts           # Web Crypto HMAC signing, constant-time comparison, key generation
+│   │   └── session.ts          # Session payload serialization, token encryption & lifecycle
+│   │
+│   ├── middlewares/            # Hono HTTP request/response pipeline interceptors
+│   │   ├── auth.ts             # Route guard middleware (validates signed session cookies)
+│   │   ├── proxy.ts            # Trusted reverse proxy middleware (parses X-Forwarded-* headers)
+│   │   ├── logger.ts           # Request logging, correlation IDs, and execution timing
+│   │   └── error.ts            # Centralized HTTP error boundary and exception handler
+│   │
+│   ├── shared/                 # Cross-cutting types, utilities, and errors reusable across all layers
+│   │   ├── types/              # Universal domain DTOs, Result types, and event contracts
+│   │   ├── utils/              # Pure utility functions (URL normalization, string & time helpers)
+│   │   └── errors/             # Standard domain and application exception classes
 │   │
 │   ├── routes/                 # Hono routing and controllers
 │   │   ├── api/                # REST & SSE endpoints (/api/sites, /api/scans, /api/events)
@@ -148,6 +162,7 @@ linkguard/
 │   └── index.ts                # Application entrypoint (assembles Hono, mounts routes, starts scheduler)
 │
 ├── tests/                      # Automated test suites
+│   ├── fixtures/               # Mock HTML pages & broken link edge-case samples
 │   ├── unit/                   # Unit tests for URL normalizer, Cheerio parser, and crypto helpers
 │   └── integration/            # In-memory Hono route testing via app.request()
 │
