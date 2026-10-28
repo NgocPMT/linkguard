@@ -19,7 +19,15 @@ LinkGuard is an independent, single-container solution designed to run 24/7 on m
 
 ## Architecture & Data Flow
 
-LinkGuard processes requests and monitors targets through a decoupled, multi-stage pipeline:
+LinkGuard is designed according to the **C4 Model** to provide clear abstractions across system context and container boundaries:
+
+### 1. System Context Diagram (C4 Level 1)
+
+Shows how LinkGuard fits into the broader operational ecosystem with administrators and external systems. An editable version is available at [docs/diagrams/c4-context.drawio](https://github.com/NgocPMT/linkguard/blob/main/docs/diagrams/c4-context.drawio).
+
+<p align="center">
+  <img src="./docs/diagrams/c4-context.png" alt="LinkGuard C4 System Context Diagram" width="100%" />
+</p>
 
 ### High-Level Execution Lifecycle
 

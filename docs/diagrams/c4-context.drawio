@@ -1,0 +1,76 @@
+<mxfile host="Electron" agent="Antigravity">
+  <diagram id="c4-system-context" name="C4 System Context - LinkGuard">
+    <mxGraphModel dx="3076" dy="1081" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="760" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b style=&quot;font-size: 18px; color: #111111;&quot;&gt;System Context Diagram: LinkGuard&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 12px; color: #666666;&quot;&gt;C4 Level 1 — Actors, Primary Scope, and External Integrations&lt;/span&gt;" vertex="1">
+          <mxGeometry height="40" width="600" x="-120" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="admin" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#08427B;strokeColor=#052E56;fontColor=#ffffff;align=center;verticalAlign=middle;shadow=0;" value="&lt;b style=&quot;font-size: 15px;&quot;&gt;Site Administrator&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px; opacity: 0.85;&quot;&gt;[Person]&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Monitors website health, inspects crawler diagnostics, and configures alert destinations.&lt;/span&gt;" vertex="1">
+          <mxGeometry height="150" width="200" x="-120" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="proxy" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;verticalAlign=middle;shadow=0;" value="&lt;b style=&quot;font-size: 15px;&quot;&gt;Reverse Proxy&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px; opacity: 0.85;&quot;&gt;[External System]&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Caddy, Nginx, or Cloudflare terminating TLS and forwarding verified client headers.&lt;/span&gt;" vertex="1">
+          <mxGeometry height="150" width="200" x="210" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="linkguard" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#ffffff;align=center;verticalAlign=middle;shadow=1;" value="&lt;b style=&quot;font-size: 16px;&quot;&gt;LinkGuard System&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px; opacity: 0.85;&quot;&gt;[Software System]&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Ultra-lightweight self-hosted monitoring platform that crawls sites, verifies links, and broadcasts alerts.&lt;/span&gt;" vertex="1">
+          <mxGeometry height="170" width="230" x="570" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="targetWeb" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;verticalAlign=middle;shadow=0;" value="&lt;b style=&quot;font-size: 15px;&quot;&gt;Target Websites&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px; opacity: 0.85;&quot;&gt;[External System]&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Public or internal web servers, blogs, and landing pages audited for broken links.&lt;/span&gt;" vertex="1">
+          <mxGeometry height="130" width="230" x="1020" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="rel1" edge="1" parent="1" source="admin" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;endArrow=classic;endFill=1;labelBackgroundColor=none;fontColor=#333333;fontSize=11;" target="proxy" value="Accesses dashboard&lt;br/&gt;&lt;b&gt;[HTTPS]&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel2" edge="1" parent="1" source="proxy" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;endArrow=classic;endFill=1;labelBackgroundColor=none;fontColor=#333333;fontSize=11;" target="linkguard" value="Proxies requests with headers&lt;br/&gt;&lt;b&gt;[HTTP / 127.0.0.1]&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel3" edge="1" parent="1" source="linkguard" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;endArrow=classic;endFill=1;labelBackgroundColor=none;fontColor=#333333;fontSize=11;exitX=1;exitY=0.25;entryX=0;entryY=0.5;" target="targetWeb" value="Probes pages &amp;amp; hyperlinks&lt;br/&gt;&lt;b&gt;[HEAD / GET (HTTP/S)]&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="rel4" edge="1" parent="1" source="linkguard" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;endArrow=classic;endFill=1;labelBackgroundColor=none;fontColor=#333333;fontSize=11;exitX=1;exitY=0.75;entryX=0;entryY=0.5;" target="boundary_channels" value="Dispatches failure alerts to enabled channels&lt;br/&gt;&lt;b&gt;[HTTPS / Webhook]&lt;/b&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_bg" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#D0D7DE;arcSize=6;shadow=0;" value="" vertex="1">
+          <mxGeometry height="150" width="470" x="-120" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;b style=&quot;font-size: 12px; color: #222222;&quot;&gt;Legend: C4 System Context Notation&lt;/b&gt;" vertex="1">
+          <mxGeometry height="24" width="280" x="-105" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_person" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#08427B;strokeColor=#052E56;fontColor=#ffffff;align=center;verticalAlign=middle;" value="&lt;b style=&quot;font-size: 11px;&quot;&gt;Person&lt;/b&gt;" vertex="1">
+          <mxGeometry height="32" width="90" x="-105" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_person_desc" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;span style=&quot;font-size: 11px; color: #444444;&quot;&gt;Human user / actor&lt;/span&gt;" vertex="1">
+          <mxGeometry height="32" width="130" x="-5" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_system" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#ffffff;align=center;verticalAlign=middle;" value="&lt;b style=&quot;font-size: 11px;&quot;&gt;Software System&lt;/b&gt;" vertex="1">
+          <mxGeometry height="32" width="90" x="-105" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_system_desc" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;span style=&quot;font-size: 11px; color: #444444;&quot;&gt;System in scope (LinkGuard)&lt;/span&gt;" vertex="1">
+          <mxGeometry height="32" width="170" x="-5" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_ext" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;verticalAlign=middle;" value="&lt;b style=&quot;font-size: 11px;&quot;&gt;External System&lt;/b&gt;" vertex="1">
+          <mxGeometry height="32" width="90" x="-105" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_ext_desc" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" value="&lt;span style=&quot;font-size: 11px; color: #444444;&quot;&gt;External systems &amp;amp; boundary&lt;/span&gt;" vertex="1">
+          <mxGeometry height="32" width="170" x="-5" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="TrrGQREvydzIFjObi78H-1" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="310" width="330" x="1030" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="boundary_channels" parent="TrrGQREvydzIFjObi78H-1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;dashed=1;dashPattern=8 4;fillColor=#F8F9FA;strokeColor=#707070;fontColor=#222222;verticalAlign=top;align=left;spacingTop=14;spacingLeft=16;" value="&lt;b style=&quot;font-size: 14px; color: #222222;&quot;&gt;Notification Channels&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px; color: #555555;&quot;&gt;[External Boundary — Configurable 0..N]&lt;/span&gt;" vertex="1">
+          <mxGeometry height="310" width="330" as="geometry" />
+        </mxCell>
+        <mxCell id="tg" parent="TrrGQREvydzIFjObi78H-1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;verticalAlign=middle;" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;Telegram&lt;/b&gt; &lt;span style=&quot;font-size: 10px; opacity: 0.9;&quot;&gt;[External System]&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Telegram Bot API&lt;/span&gt;" vertex="1">
+          <mxGeometry height="65" width="260" x="35" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dc" parent="TrrGQREvydzIFjObi78H-1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;verticalAlign=middle;" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;Discord&lt;/b&gt; &lt;span style=&quot;font-size: 10px; opacity: 0.9;&quot;&gt;[External System]&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Discord Webhook API&lt;/span&gt;" vertex="1">
+          <mxGeometry height="65" width="260" x="35" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="sl" parent="TrrGQREvydzIFjObi78H-1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;verticalAlign=middle;" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;Slack&lt;/b&gt; &lt;span style=&quot;font-size: 10px; opacity: 0.9;&quot;&gt;[External System]&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Incoming Webhooks&lt;/span&gt;" vertex="1">
+          <mxGeometry height="65" width="260" x="35" y="220" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
