@@ -29,6 +29,14 @@ Shows how LinkGuard fits into the broader operational ecosystem with administrat
   <img src="./docs/diagrams/c4-context.png" alt="LinkGuard C4 System Context Diagram" width="100%" />
 </p>
 
+### 2. Container Diagram (C4 Level 2)
+
+Shows the high-level deployable units and runtime modules inside the LinkGuard application boundary. An editable version is available at [docs/diagrams/c4-container.drawio](https://github.com/NgocPMT/linkguard/blob/main/docs/diagrams/c4-container.drawio).
+
+<p align="center">
+  <img src="./docs/diagrams/c4-container.png" alt="LinkGuard C4 Container Diagram" width="100%" />
+</p>
+
 ### High-Level Execution Lifecycle
 
 1. **Gateway & Protection:** Inbound requests are validated via lightweight, cryptographically signed cookies (HMAC Web Crypto). External access is restricted behind a master credential layer.
