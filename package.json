@@ -8,7 +8,7 @@
     "lint:fix": "biome check --write src tests",
     "test": "bun test",
     "test:coverage": "bun test --coverage",
-    "routes": "bun run --bun hono routes"
+    "routes": "bun run --bun hono routes -e bun:sqlite"
   },
   "dependencies": {
     "hono": "^5.0.0-rc.1"
