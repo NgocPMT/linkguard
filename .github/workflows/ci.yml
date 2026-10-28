@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality-checks:
+    name: Quality Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun Runtime
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install Dependencies
+        run: bun install --frozen-lockfile
+
+      - name: 1. Linting (Biome)
+        run: bun run lint
+
+      - name: 2. Type Checking (TypeScript)
+        run: bun run typecheck
+
+      - name: 3. Build Verification (Bun Bundler)
+        run: bun run build
+
+      - name: 4. Test Suites (bun:test)
+        run: bun test
