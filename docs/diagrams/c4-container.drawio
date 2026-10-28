@@ -1,0 +1,176 @@
+<mxfile host="app.diagrams.net" agent="Antigravity" version="24.0.0">
+  <diagram id="c4-container-diagram" name="C4 Container - LinkGuard Platform">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="950" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title Block -->
+        <mxCell id="title" value="&lt;b style=&quot;font-size: 18px; color: #111111;&quot;&gt;Container Diagram: LinkGuard Platform&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 12px; color: #666666;&quot;&gt;C4 Level 2 — Applications, Embedded Storage, Background Engines, and Adapter Integrations&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="30" width="700" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Person: Site Administrator -->
+        <mxCell id="admin" value="&lt;b style=&quot;font-size: 15px;&quot;&gt;Site Administrator&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px; opacity: 0.85;&quot;&gt;[Person]&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Monitors sites, views real-time diagnostics, and configures alert webhooks.&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#08427B;strokeColor=#052E56;fontColor=#ffffff;align=center;verticalAlign=middle;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="330" width="200" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- External System: Reverse Proxy -->
+        <mxCell id="proxy" value="&lt;b style=&quot;font-size: 15px;&quot;&gt;Reverse Proxy&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px; opacity: 0.85;&quot;&gt;[External System]&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Caddy, Nginx, or Cloudflare terminating TLS and forwarding client headers.&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;verticalAlign=middle;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="420" y="330" width="200" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- Container Group: LinkGuard Application -->
+        <mxCell id="group_linkguard" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="820" y="110" width="680" height="630" as="geometry" />
+        </mxCell>
+
+        <mxCell id="boundary_app" value="&lt;b style=&quot;font-size: 15px; color: #1168BD;&quot;&gt;LinkGuard Application&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px; color: #555555;&quot;&gt;[Container Boundary — Single Bun Container]&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=5;dashed=1;dashPattern=8 4;fillColor=#FFFFFF;strokeColor=#1168BD;strokeWidth=2;verticalAlign=top;align=left;spacingTop=14;spacingLeft=18;" vertex="1" parent="group_linkguard">
+          <mxGeometry width="680" height="630" as="geometry" />
+        </mxCell>
+
+        <!-- Web & Dashboard App -->
+        <mxCell id="webApp" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Web &amp;amp; Dashboard App&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 10px; opacity: 0.9;&quot;&gt;[Container: Bun, Hono, Hono JSX]&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Serves server-rendered JSX views, validates Web Crypto session cookies, and streams live progress via SSE.&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;align=center;verticalAlign=middle;" vertex="1" parent="group_linkguard">
+          <mxGeometry x="40" y="70" width="260" height="140" as="geometry" />
+        </mxCell>
+
+        <!-- Embedded Database -->
+        <mxCell id="db" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Embedded Database&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 10px; opacity: 0.9;&quot;&gt;[Container: SQLite (bun:sqlite)]&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Single-file embedded database storing registered websites, crawl run history, and broken link audit logs.&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#2B5B88;strokeColor=#1B3955;fontColor=#ffffff;align=center;verticalAlign=middle;" vertex="1" parent="group_linkguard">
+          <mxGeometry x="40" y="420" width="260" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- Background Scheduler -->
+        <mxCell id="scheduler" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Background Scheduler&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 10px; opacity: 0.9;&quot;&gt;[Container: Bun, Cron Engine]&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Evaluates recurring cron schedules and triggers periodic automated crawl jobs.&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;align=center;verticalAlign=middle;" vertex="1" parent="group_linkguard">
+          <mxGeometry x="380" y="70" width="260" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- Discovery & Verifier Engine -->
+        <mxCell id="engine" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Discovery &amp;amp; Verifier&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 10px; opacity: 0.9;&quot;&gt;[Container: Cheerio, Fetch, Queue]&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Executes BFS traversal, HTML extraction with Cheerio, and rate-limited HTTP HEAD/GET probes.&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;align=center;verticalAlign=middle;" vertex="1" parent="group_linkguard">
+          <mxGeometry x="380" y="240" width="260" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- Alert Dispatcher -->
+        <mxCell id="dispatcher" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;Alert Dispatcher&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 10px; opacity: 0.9;&quot;&gt;[Container: Adapter Pattern]&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Normalizes dead link payloads and broadcasts alerts in parallel across enabled adapters.&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;align=center;verticalAlign=middle;" vertex="1" parent="group_linkguard">
+          <mxGeometry x="380" y="420" width="260" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- Internal Connections inside App -->
+        <mxCell id="rel_app1" value="Reads &amp;amp; writes sites, scans&lt;br/&gt;&lt;b&gt;[bun:sqlite]&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;endArrow=classic;endFill=1;labelBackgroundColor=none;fontColor=#333333;fontSize=11;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="webApp" target="db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel_app2" value="Triggers scheduled scans&lt;br/&gt;&lt;b&gt;[In-Process]&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;endArrow=classic;endFill=1;labelBackgroundColor=none;fontColor=#333333;fontSize=11;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="scheduler" target="engine">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel_app3" value="Triggers manual scan&lt;br/&gt;&lt;b&gt;[In-Process]&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;endArrow=classic;endFill=1;labelBackgroundColor=none;fontColor=#333333;fontSize=11;exitX=1;exitY=0.7;entryX=0;entryY=0.25;" edge="1" parent="1" source="webApp" target="engine">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel_app4" value="Persists crawl results&lt;br/&gt;&lt;b&gt;[bun:sqlite]&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;endArrow=classic;endFill=1;labelBackgroundColor=none;fontColor=#333333;fontSize=11;exitX=0;exitY=0.75;entryX=1;entryY=0.3;" edge="1" parent="1" source="engine" target="db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel_app5" value="Streams live scan progress&lt;br/&gt;&lt;b&gt;[Event Emitter / SSE]&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;endArrow=classic;endFill=1;labelBackgroundColor=none;fontColor=#333333;fontSize=11;exitX=0;exitY=0.4;entryX=0.75;entryY=1;" edge="1" parent="1" source="engine" target="webApp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rel_app6" value="Dispatches failure event&lt;br/&gt;&lt;b&gt;[In-Process]&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;endArrow=classic;endFill=1;labelBackgroundColor=none;fontColor=#333333;fontSize=11;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="engine" target="dispatcher">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- External System: Target Websites -->
+        <mxCell id="targetWeb" value="&lt;b style=&quot;font-size: 15px;&quot;&gt;Target Websites&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px; opacity: 0.85;&quot;&gt;[External System]&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Public or internal web servers, blogs, and landing pages audited for broken links.&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;verticalAlign=middle;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="1760" y="140" width="230" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- Notification Channels Boundary (Group) -->
+        <mxCell id="group_channels" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="1760" y="370" width="330" height="310" as="geometry" />
+        </mxCell>
+
+        <mxCell id="boundary_channels" value="&lt;b style=&quot;font-size: 14px; color: #222222;&quot;&gt;Notification Channels&lt;/b&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px; color: #555555;&quot;&gt;[External Boundary — Configurable 0..N]&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;dashed=1;dashPattern=8 4;fillColor=#F8F9FA;strokeColor=#707070;fontColor=#222222;verticalAlign=top;align=left;spacingTop=14;spacingLeft=16;" vertex="1" parent="group_channels">
+          <mxGeometry width="330" height="310" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tg" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;Telegram&lt;/b&gt; &lt;span style=&quot;font-size: 10px; opacity: 0.9;&quot;&gt;[External System]&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Telegram Bot API&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;verticalAlign=middle;" vertex="1" parent="group_channels">
+          <mxGeometry x="35" y="60" width="260" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dc" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;Discord&lt;/b&gt; &lt;span style=&quot;font-size: 10px; opacity: 0.9;&quot;&gt;[External System]&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Discord Webhook API&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;verticalAlign=middle;" vertex="1" parent="group_channels">
+          <mxGeometry x="35" y="140" width="260" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sl" value="&lt;b style=&quot;font-size: 13px;&quot;&gt;Slack&lt;/b&gt; &lt;span style=&quot;font-size: 10px; opacity: 0.9;&quot;&gt;[External System]&lt;/span&gt;&lt;br/&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;Incoming Webhooks&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;verticalAlign=middle;" vertex="1" parent="group_channels">
+          <mxGeometry x="35" y="220" width="260" height="65" as="geometry" />
+        </mxCell>
+
+        <!-- External Relationships with Scaled Dynamic Clearance -->
+        <!-- Admin -> Proxy -->
+        <mxCell id="rel_ext1" value="Accesses dashboard&lt;br/&gt;&lt;b&gt;[HTTPS]&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;endArrow=classic;endFill=1;labelBackgroundColor=none;fontColor=#333333;fontSize=11;" edge="1" parent="1" source="admin" target="proxy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Proxy -> WebApp -->
+        <mxCell id="rel_ext2" value="Proxies requests with headers&lt;br/&gt;&lt;b&gt;[HTTP / 127.0.0.1]&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;endArrow=classic;endFill=1;labelBackgroundColor=none;fontColor=#333333;fontSize=11;exitX=1;exitY=0.35;entryX=0;entryY=0.5;" edge="1" parent="1" source="proxy" target="webApp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Engine -> Target Websites -->
+        <mxCell id="rel_ext3" value="Probes hyperlinks with rate limiting&lt;br/&gt;&lt;b&gt;[HEAD / GET (HTTP/S)]&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;endArrow=classic;endFill=1;labelBackgroundColor=none;fontColor=#333333;fontSize=11;exitX=1;exitY=0.3;entryX=0;entryY=0.5;" edge="1" parent="1" source="engine" target="targetWeb">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Dispatcher -> Notification Channels Boundary -->
+        <mxCell id="rel_ext4" value="Dispatches alerts to enabled channels&lt;br/&gt;&lt;b&gt;[HTTPS / Webhook]&lt;/b&gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#707070;strokeWidth=2;endArrow=classic;endFill=1;labelBackgroundColor=none;fontColor=#333333;fontSize=11;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="dispatcher" target="boundary_channels">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Legend Block -->
+        <mxCell id="legend_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D0D7DE;arcSize=6;shadow=0;" vertex="1" parent="1">
+          <mxGeometry x="50" y="520" width="470" height="210" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend_title" value="&lt;b style=&quot;font-size: 12px; color: #222222;&quot;&gt;Legend: C4 Container Notation&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="65" y="528" width="280" height="24" as="geometry" />
+        </mxCell>
+
+        <mxCell id="leg_person" value="&lt;b style=&quot;font-size: 11px;&quot;&gt;Person&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#08427B;strokeColor=#052E56;fontColor=#ffffff;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="65" y="556" width="90" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_person_desc" value="&lt;span style=&quot;font-size: 11px; color: #444444;&quot;&gt;Human user / Site Administrator&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="165" y="556" width="250" height="28" as="geometry" />
+        </mxCell>
+
+        <mxCell id="leg_container" value="&lt;b style=&quot;font-size: 11px;&quot;&gt;Container&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#ffffff;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="65" y="590" width="90" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_container_desc" value="&lt;span style=&quot;font-size: 11px; color: #444444;&quot;&gt;Deployable application / engine module&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="165" y="590" width="250" height="28" as="geometry" />
+        </mxCell>
+
+        <mxCell id="leg_db" value="&lt;b style=&quot;font-size: 11px;&quot;&gt;Database&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#2B5B88;strokeColor=#1B3955;fontColor=#ffffff;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="65" y="624" width="90" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_db_desc" value="&lt;span style=&quot;font-size: 11px; color: #444444;&quot;&gt;Embedded persistence (bun:sqlite)&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="165" y="624" width="250" height="28" as="geometry" />
+        </mxCell>
+
+        <mxCell id="leg_ext" value="&lt;b style=&quot;font-size: 11px;&quot;&gt;External System&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=8;fillColor=#999999;strokeColor=#666666;fontColor=#ffffff;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="65" y="658" width="90" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_ext_desc" value="&lt;span style=&quot;font-size: 11px; color: #444444;&quot;&gt;External systems &amp;amp; web targets&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="165" y="658" width="250" height="28" as="geometry" />
+        </mxCell>
+
+        <mxCell id="leg_boundary" value="&lt;b style=&quot;font-size: 11px; color: #333333;&quot;&gt;Boundary&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;dashed=1;dashPattern=6 3;fillColor=#F8F9FA;strokeColor=#707070;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="65" y="692" width="90" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_boundary_desc" value="&lt;span style=&quot;font-size: 11px; color: #444444;&quot;&gt;Application &amp;amp; notification group boundary&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="165" y="692" width="250" height="28" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
