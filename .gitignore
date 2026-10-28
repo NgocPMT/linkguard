@@ -1,2 +1,14 @@
-# deps
+# Dependencies
 node_modules/
+
+# Production build outputs
+dist/
+
+# SQLite databases and WAL files
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+
+# Tooling and caches
+.biome/
