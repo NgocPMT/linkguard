@@ -52,40 +52,6 @@ Shows the high-level deployable units and internal runtime modules within the Li
   <img src="../diagrams/c4-container.png" alt="LinkGuard C4 Container Diagram" width="100%" />
 </p>
 
-```
-[ User / Browser ]
-         │ (HTTPS)
-         ▼
-[ Reverse Proxy (Caddy / Nginx / Cloudflare) ]
-         │ (127.0.0.1:3000 / Forwarded Headers)
-         ▼
-[ Gateway & Security Layer ]
-  • proxyMiddleware (trusted header resolution)
-  • authMiddleware (HMAC Web Crypto session guard)
-  • loggerMiddleware & errorHandler
-         │
-         ├─────────────────────────────────────────┐
-         ▼                                         ▼
-[ Web Presentation & API Layer ]          [ Background Scheduler (Cron) ]
-  • Server-Rendered UI (Hono JSX)                   │ (Evaluates site cron)
-  • REST API Controllers                            ▼
-  • Server-Sent Events (SSE Stream)       [ Discovery Engine (BFS) ]
-         ▲                                  • Cheerio Static Parser
-         │                                  • Domain & Depth Boundary Filter
-         │                                          │
-         │                                          ▼
-         │                                [ Verification Engine ]
-         │                                  • Smart HEAD / GET Probes
-         │                                  • Concurrency Throttling
-         │                                  • 5-Hop Redirect Follower
-         │                                          │
-         ├──────────────────────────────────────────┤ (Persist Records)
-         ▼                                          ▼
-[ Embedded Persistence Layer (bun:sqlite) ]
-  • sites, scans, discovered_links tables
-  • WAL journal mode & foreign key enforcement
-```
-
 ---
 
 ## 4. End-to-End Execution Lifecycle
