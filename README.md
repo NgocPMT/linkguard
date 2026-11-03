@@ -17,81 +17,13 @@ LinkGuard is an independent, single-container solution designed to run 24/7 on m
 
 ---
 
-## Architecture & Data Flow
+## System Architecture & Specifications
 
-LinkGuard is designed according to the **C4 Model** to provide clear abstractions across system context and container boundaries:
+LinkGuard is designed according to the **C4 Model** for clear system context and runtime modularity. The full system architecture, database schema, and REST API contracts are maintained in dedicated specifications:
 
-### 1. System Context Diagram (C4 Level 1)
-
-Shows how LinkGuard fits into the broader operational ecosystem with administrators and external systems. An editable version is available at [docs/diagrams/c4-context.drawio](https://github.com/NgocPMT/linkguard/blob/main/docs/diagrams/c4-context.drawio).
-
-<p align="center">
-  <img src="./docs/diagrams/c4-context.png" alt="LinkGuard C4 System Context Diagram" width="100%" />
-</p>
-
-### 2. Container Diagram (C4 Level 2)
-
-Shows the high-level deployable units and runtime modules inside the LinkGuard application boundary. An editable version is available at [docs/diagrams/c4-container.drawio](https://github.com/NgocPMT/linkguard/blob/main/docs/diagrams/c4-container.drawio).
-
-<p align="center">
-  <img src="./docs/diagrams/c4-container.png" alt="LinkGuard C4 Container Diagram" width="100%" />
-</p>
-
-### High-Level Execution Lifecycle
-
-1. **Gateway & Protection:** Inbound requests are validated via lightweight, cryptographically signed cookies (HMAC Web Crypto). External access is restricted behind a master credential layer.
-2. **Discovery (BFS Crawling):** Breadth-First Search traverses pages starting from the root URL. Static HTML is parsed in milliseconds using Cheerio to extract all anchor tags up to a configured crawl depth.
-3. **Verification & Politeness:** Internal and external URLs are evaluated through a rate-limited queue. The engine favors non-destructive `HEAD` probes and falls back to `GET` requests when servers reject `HEAD` methods.
-4. **Resilient Alerting:** Identified anomalies are normalized into an `AlertPayload` and delivered concurrently to configured webhook adapters. A network failure in one destination (e.g., Discord) never stalls or disrupts remaining channels.
-5. **Real-Time Visualization:** Scan progression and health metrics are streamed continuously to the UI over Server-Sent Events with `X-Accel-Buffering: no` headers to bypass intermediate proxy buffering.
-
-<details>
-<summary><b>Text-Based Architecture Diagram (Click to expand)</b></summary>
-
-```
-[ User / Web Browser ]
-         │ (HTTPS)
-         ▼
-[ Reverse Proxy (Caddy / Nginx / Cloudflare) ]
-         │ (Trust Forwarded Headers / 127.0.0.1)
-         ▼
-[ Gateway: Master Auth & Session Layer ]
-         │
-         ├─────────────────────────────────────────┐
-         ▼                                         ▼
-[ Live Dashboard (Hono JSX) ]             [ Background Scheduler (Cron) ]
-  • Server-Sent Events (SSE)                        │
-  • Link Network Visualization                      ▼
-  • Real-time Scan Progress               [ Discovery Engine (BFS) ]
-         ▲                                  • Cheerio Static Parser
-         │                                          │
-         │ (Live Stream)                            ▼
-         │                                [ Verification Engine ]
-[ Embedded SQLite (bun:sqlite) ]            • Smart HEAD / GET probes
-         ▲                                  • Domain Rate Limiter
-         │                                          │
-         └──────── (Persist Results) ───────────────┤ (On Broken Link)
-                                                    ▼
-                                          [ Alert Dispatcher ]
-                                            (Adapter Pattern)
-                                            ├── Telegram Adapter
-                                            ├── Discord Adapter
-                                            └── Slack Adapter
-```
-</details>
-
----
-
-## Technology Stack & Rationale
-
-| Component | Choice | Technical Rationale |
-| :--- | :--- | :--- |
-| **Runtime Engine** | **Bun** | High-throughput network I/O, instantaneous process startup, native TypeScript execution without transpilation steps, and integrated high-speed SQLite bindings. |
-| **Web Framework** | **Hono** | Ultra-lightweight framework built upon standard Web APIs (`Fetch`, `Request`, `Response`), native Server-Sent Events (`streamSSE`), and low memory overhead. |
-| **UI Layer** | **Hono JSX (SSR)** | Server-rendered components (`hono/jsx`) delivering zero-bundle HTML, paired with minimal vanilla JavaScript for real-time DOM hydration via SSE. |
-| **HTML Parser** | **Cheerio** | High-speed static DOM parsing with jQuery syntax; consumes a fraction of the memory and CPU required by headless browsers (Playwright/Puppeteer). |
-| **Storage Engine** | **Embedded SQLite** | Serverless, single-file database accessed directly through `bun:sqlite`. Eliminates external database containers while providing robust transactions and instantaneous backups. |
-| **Security Layer** | **Web Crypto API** | Zero-dependency master password authentication and HMAC-signed session cookies utilizing Bun's native cryptographic primitives. |
+* **[System Architecture Overview](docs/architecture/overview.md):** C4 System Context & Container diagrams, end-to-end execution lifecycle, component boundaries, and technology stack rationales.
+* **[Database Schema Specification](docs/architecture/database-schema.md):** Canonical SQLite DDL tables (`sites`, `scans`, `discovered_links`), constraints, and performance indexes.
+* **[REST API Contract Specification](docs/architecture/api-spec.md):** Canonical REST endpoints, request/response JSON schemas, query parameters, and error envelopes.
 
 ---
 
@@ -103,6 +35,7 @@ The codebase is organized as a unified, modular monolith:
 linkguard/
 ├── .agents/                    # Agent skills, operational guidelines, and tool configs
 ├── docs/                       # Project documentation and architectural governance
+│   ├── architecture/           # System architecture, database schema & API contracts
 │   ├── adr/                    # Architecture Decision Records (e.g., 0001-storage-sqlite.md)
 │   ├── use-cases/              # Functional use case specifications
 │   ├── rfcs/                   # Technical Request for Comments proposals
