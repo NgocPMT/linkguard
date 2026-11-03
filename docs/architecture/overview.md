@@ -19,8 +19,8 @@ LinkGuard is an independent, single-process solution designed to operate 24/7 on
 
 The detailed data and interface contracts supporting this architecture are documented in dedicated specifications:
 
-* 🗄️ **[Database Schema Specification](../database/schema.md):** Canonical SQLite DDL, table relationships (`sites`, `scans`, `discovered_links`), constraints, and performance indexes.
-* 🔌 **[REST API Contract Specification](../api/api-spec.md):** Canonical HTTP verbs, payload schemas, query parameters, status codes, and error envelopes.
+* 🗄️ **[Database Schema Specification](./database-schema.md):** Canonical SQLite DDL, table relationships (`sites`, `scans`, `discovered_links`), constraints, and performance indexes.
+* 🔌 **[REST API Contract Specification](./api-spec.md):** Canonical HTTP verbs, payload schemas, query parameters, status codes, and error envelopes.
 
 ---
 
