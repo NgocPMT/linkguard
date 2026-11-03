@@ -21,9 +21,9 @@ LinkGuard is an independent, single-container solution designed to run 24/7 on m
 
 LinkGuard is designed according to the **C4 Model** for clear system context and runtime modularity. The full system architecture, database schema, and REST API contracts are maintained in dedicated specifications:
 
-* 📐 **[System Architecture Overview](docs/architecture/overview.md):** C4 System Context & Container diagrams, end-to-end execution lifecycle, component boundaries, and technology stack rationales.
-* 🗄️ **[Database Schema Specification](docs/architecture/database-schema.md):** Canonical SQLite DDL tables (`sites`, `scans`, `discovered_links`), constraints, and performance indexes.
-* 🔌 **[REST API Contract Specification](docs/architecture/api-spec.md):** Canonical REST endpoints, request/response JSON schemas, query parameters, and error envelopes.
+* **[System Architecture Overview](docs/architecture/overview.md):** C4 System Context & Container diagrams, end-to-end execution lifecycle, component boundaries, and technology stack rationales.
+* **[Database Schema Specification](docs/architecture/database-schema.md):** Canonical SQLite DDL tables (`sites`, `scans`, `discovered_links`), constraints, and performance indexes.
+* **[REST API Contract Specification](docs/architecture/api-spec.md):** Canonical REST endpoints, request/response JSON schemas, query parameters, and error envelopes.
 
 ---
 
